@@ -10,7 +10,10 @@
     <div class="container mt-5">
         <h1>Вопросы</h1>
         <div th:each="exam : ${exams}" class="alert alert-info mt-2">
-            <h3 th:text="${exam.text}"/>
+            <h3 th:text="${exam.text}"/> <br>
+            <h4 th:text="${exam.answers}"/> <br>
+            <h5 th:text="${exam.right_answer}"/> <br>
+            <h5 th:text="${exam.explain}"/> <br>
             <a th:href="'/exam/' + ${exam.id}">Пройти</a>
         </div>
     </div>

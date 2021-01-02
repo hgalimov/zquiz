@@ -15,6 +15,16 @@ public class Exam {
 
     private String text, explain, answers, right_answer;
 
+    public Exam(String text, String answers, String right_answer, String explain) {
+        this.text = text;
+        this.explain = explain;
+        this.answers = answers;
+        this.right_answer = right_answer;
+    }
+
+    public Exam() {
+    }
+
     public Long getId() {
         return id;
     }

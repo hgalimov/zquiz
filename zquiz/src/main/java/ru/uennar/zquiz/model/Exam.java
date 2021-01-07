@@ -1,9 +1,6 @@
 package ru.uennar.zquiz.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Exam {
@@ -14,6 +11,13 @@ public class Exam {
 
 
     private String text, explain, answers, right_answer;
+
+    public String[] getAnswersArr() {
+        answersArr = answers.split("_");
+        return answersArr;
+    }
+    @Transient
+    private String[] answersArr;
 
     public Exam(String text, String answers, String right_answer, String explain) {
         this.text = text;

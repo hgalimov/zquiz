@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.uennar.zquiz.model.CheckExam;
 import ru.uennar.zquiz.model.Exam;
 import ru.uennar.zquiz.repo.ExamRepository;
 
@@ -19,6 +20,7 @@ public class ExamController {
     public String exam(Model model){
         Iterable<Exam> exams = examRepository.findAll();
         model.addAttribute("exams", exams);
+        model.addAttribute("check", new CheckExam());
         return "exam";
     }
 
@@ -34,5 +36,13 @@ public class ExamController {
         Exam exam = new Exam(text, answers, right_answer, explain);
         examRepository.save(exam);
         return "redirect:/exam";
+    }
+
+    @PostMapping("/exam/giveAns")
+    public String giveAns(CheckExam checkExam, Model model){
+        if (checkExam.getCurAns().equals(checkExam.getRightAns())){
+            return "redirect:/exam";
+        }
+        return "redirect:/";
     }
 }

@@ -6,17 +6,45 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <header th:insert="blocks/header:: header"></header>
-    <div class="container mt-5">
-        <h1>Вопросы</h1>
-        <div th:each="exam : ${exams}" class="alert alert-info mt-2">
-            <h3 th:text="${exam.text}"/> <br>
-            <h4 th:text="${exam.answers}"/> <br>
-            <h5 th:text="${exam.right_answer}"/> <br>
-            <h5 th:text="${exam.explain}"/> <br>
-            <a th:href="'/exam/' + ${exam.id}">Пройти</a>
+<header th:insert="blocks/header:: header"></header>
+<!--<div class="container mt-5">
+    <h1>Вопросы</h1>
+    <div th:each="exam : ${exams}" class="alert alert-info mt-2">
+        <h3 th:text="${exam.text}"/> <br>
+        <h3 th:text="${exam.answers}"/> <br>
+        <h5 th:text="${exam.right_answer}"/> <br>
+        <h5 th:text="${exam.explain}"/> <br>
+        <form action="/exam/answer" method="post" class="mt-5">
+            <div th:each="el : ${exam.answersArr}" class="form-group">
+                <h3 th:text="${el}"/>
+                <div class="custom-control custom-radio custom-control-inline">
+                   <input type="radio" th:id="${el}" th:name="${el}" th:value="${el}" class="custom-control-input">
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Ответить</button>
+        </form>
+    </div>
+</div>-->
+<div class="container">
+
+    <h3>Вопросы</h3>
+    <div class="form-group">
+        <div th:each="element : ${exams}">
+            <form method="post" th:object="${check}" class="mt-5" action="/exam/giveAns">
+                <h3 th:text="${element.text}">Вопрос</h3>
+                <div th:each="answ : ${element.getAnswersArr()}">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" th:field="*{curAns}" th:value="${answ}" class="custom-control-input">
+                        <label class="custom-control-label" th:for="${#ids.prev('curAns')}"
+                               th:text="${answ}">отв</label>
+                    </div>
+                </div>
+                <input type="hidden" th:value="${element.right_answer}" th:attr="name='rightAns'">
+                <button class="btn btn-primary" type="submit">Ответить</button>
+            </form>
         </div>
     </div>
-    <footer th:insert="blocks/footer :: footer"></footer>
+</div>
+<footer th:insert="blocks/footer :: footer"></footer>
 </body>
 </html>
